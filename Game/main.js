@@ -12,7 +12,9 @@ window.$l = function(selector) {
     d.innerHTML = selector;
     arr = [d.firstChild];
     d = null;
-  } else if (typeof selector === "string" ) {
+  } else if( selector instanceof HTMLElement) {
+    arr = [selector];
+  }else if (typeof selector === "string" ) {
     arr = Array.from(document.querySelectorAll(selector));
   } else {
     return -1;

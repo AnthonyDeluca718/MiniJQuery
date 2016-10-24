@@ -8,13 +8,15 @@ class View {
   }
 
   bindEvents() {
-    this.$el.on("click", "li", ( event => {
+    $l('li').on("click", ( event => {
+      debugger
       const $square = $l(event.currentTarget);
       this.makeMove($square);
     }));
   }
 
   makeMove($square) {
+    debugger
     const pos = $square.data("pos");
     const currentPlayer = this.game.currentPlayer;
 
