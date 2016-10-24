@@ -1,6 +1,6 @@
 const View = require('../frontend/ttt-view');
 const Game = require('../game/game');
-const $l = require('../lib/miniJquery.js');
+require('../lib/miniJquery.js');
 
 $l( () => {
   const rootEl = $l('.ttt');

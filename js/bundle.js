@@ -46,7 +46,7 @@
 
 	const View = __webpack_require__(1);
 	const Game = __webpack_require__(4);
-	const $l = __webpack_require__(2);
+	__webpack_require__(2);
 	
 	$l( () => {
 	  const rootEl = $l('.ttt');
