@@ -9,14 +9,13 @@ class View {
 
   bindEvents() {
     $l('li').on("click", ( event => {
-      debugger
       const $square = $l(event.currentTarget);
       this.makeMove($square);
     }));
   }
 
   makeMove($square) {
-    const pos = $square.attr("pos");
+    const pos = $square.data("pos");
     const currentPlayer = this.game.currentPlayer;
 
     try {
@@ -54,11 +53,11 @@ class View {
     for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
       for (let colIdx = 0; colIdx < 3; colIdx++) {
         let $li = $l("<li>");
-        $li.array[0]["pos"] = [rowIdx, colIdx];
+        $li.array[0].setAttribute("pos", JSON.stringify([rowIdx, colIdx]));
+        // $li.data("pos", [rowIdx, colIdx] );
         $ul.append($li);
       }
     }
-    debugger
     this.$el.append($ul);
   }
 }

@@ -124,7 +124,6 @@ class DOMNodeCollection {
         });
         el[k] = [];
       }
-      el[k].push(callback);
     });
   }
 
@@ -151,7 +150,7 @@ class DOMNodeCollection {
       }
     } else {
       this.each( (el) => {
-        el[key] = JSON.stringify(value);
+        el.setAttribute(key, JSON.stringify(value) );
       });
     }
   }

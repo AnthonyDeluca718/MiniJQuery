@@ -254,7 +254,6 @@
 	        });
 	        el[k] = [];
 	      }
-	      el[k].push(callback);
 	    });
 	  }
 	
@@ -281,7 +280,7 @@
 	      }
 	    } else {
 	      this.each( (el) => {
-	        el[key] = JSON.stringify(value);
+	        el.setAttribute(key, JSON.stringify(value) );
 	      });
 	    }
 	  }
@@ -318,14 +317,13 @@
 	
 	  bindEvents() {
 	    $l('li').on("click", ( event => {
-	      debugger
 	      const $square = $l(event.currentTarget);
 	      this.makeMove($square);
 	    }));
 	  }
 	
 	  makeMove($square) {
-	    const pos = $square.attr("pos");
+	    const pos = $square.data("pos");
 	    const currentPlayer = this.game.currentPlayer;
 	
 	    try {
@@ -363,11 +361,11 @@
 	    for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
 	      for (let colIdx = 0; colIdx < 3; colIdx++) {
 	        let $li = $l("<li>");
-	        $li.array[0]["pos"] = [rowIdx, colIdx];
+	        $li.array[0].setAttribute("pos", JSON.stringify([rowIdx, colIdx]));
+	        // $li.data("pos", [rowIdx, colIdx] );
 	        $ul.append($li);
 	      }
 	    }
-	    debugger
 	    this.$el.append($ul);
 	  }
 	}
