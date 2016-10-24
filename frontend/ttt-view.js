@@ -1,3 +1,5 @@
+$l = require('../lib/miniJquery.js');
+
 class View {
   constructor(game, $el) {
     this.game = game;
@@ -10,7 +12,7 @@ class View {
   bindEvents() {
     // install a handler on the `li` elements inside the board.
     this.$el.on("click", "li", ( event => {
-      const $square = $(event.currentTarget);
+      const $square = $l(event.currentTarget);
       this.makeMove($square);
     }));
   }
@@ -34,7 +36,7 @@ class View {
       this.$el.addClass("game-over");
 
       const winner = this.game.winner();
-      const $figcaption = $("<figcaption>");
+      const $figcaption = $l("<figcaption>");
 
       if (winner) {
         this.$el.addClass(`winner-${winner}`);
@@ -48,12 +50,12 @@ class View {
   }
 
   setupBoard() {
-    const $ul = $("<ul>");
+    const $ul = $l("<ul>");
     $ul.addClass("group");
 
     for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
       for (let colIdx = 0; colIdx < 3; colIdx++) {
-        let $li = $("<li>");
+        let $li = $l("<li>");
         $li.data("pos", [rowIdx, colIdx]);
 
         $ul.append($li);
