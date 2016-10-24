@@ -16,8 +16,7 @@ class View {
   }
 
   makeMove($square) {
-    debugger
-    const pos = $square.data("pos");
+    const pos = $square.attr("pos");
     const currentPlayer = this.game.currentPlayer;
 
     try {
@@ -55,12 +54,11 @@ class View {
     for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
       for (let colIdx = 0; colIdx < 3; colIdx++) {
         let $li = $l("<li>");
-        $li.data("pos", [rowIdx, colIdx]);
-
+        $li.array[0]["pos"] = [rowIdx, colIdx];
         $ul.append($li);
       }
     }
-
+    debugger
     this.$el.append($ul);
   }
 }

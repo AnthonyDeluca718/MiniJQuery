@@ -30,14 +30,6 @@ class DOMNodeCollection {
   }
 
   append(arg) {
-
-    // if (typeof children === 'object' &&
-    //     !(children instanceof DomNodeCollection)) {
-    //   // ensure argument is coerced into DomNodeCollection
-    //   children = $l(children);
-    // }
-
-
     if (arg instanceof DOMNodeCollection) {
       arg.each( (child) => {
         this.each( (el) => {
@@ -55,14 +47,6 @@ class DOMNodeCollection {
       });
     } else {
       return -1;
-    }
-  }
-
-  attr(key, value) {
-    if (typeof val === "string") {
-      this.each( el => el.setAttribute(key, val) );
-    } else {
-      return this.nodes[0].getAttribute(key);
     }
   }
 
@@ -144,11 +128,31 @@ class DOMNodeCollection {
     });
   }
 
+  attr(key, value) {
+    if (value === undefined) {
+      if (this.array.length === 0) {
+        return -1;
+      } else {
+        return this.array[0].getAttribute(key);
+      }
+    } else {
+      this.each( (el) => {
+        el.setAttribute(key, value);
+      });
+    }
+  }
+
   data(key, value) {
     if (value === undefined) {
-      return this[key];
+      if (this.array.length === 0) {
+        return -1;
+      } else {
+        return JSON.parse(this.array[0].getAttribute(key));
+      }
     } else {
-      this[key] = value;
+      this.each( (el) => {
+        el[key] = JSON.stringify(value);
+      });
     }
   }
 

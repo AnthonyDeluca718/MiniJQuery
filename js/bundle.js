@@ -160,14 +160,6 @@
 	  }
 	
 	  append(arg) {
-	
-	    // if (typeof children === 'object' &&
-	    //     !(children instanceof DomNodeCollection)) {
-	    //   // ensure argument is coerced into DomNodeCollection
-	    //   children = $l(children);
-	    // }
-	
-	
 	    if (arg instanceof DOMNodeCollection) {
 	      arg.each( (child) => {
 	        this.each( (el) => {
@@ -185,14 +177,6 @@
 	      });
 	    } else {
 	      return -1;
-	    }
-	  }
-	
-	  attr(key, value) {
-	    if (typeof val === "string") {
-	      this.each( el => el.setAttribute(key, val) );
-	    } else {
-	      return this.nodes[0].getAttribute(key);
 	    }
 	  }
 	
@@ -274,11 +258,31 @@
 	    });
 	  }
 	
+	  attr(key, value) {
+	    if (value === undefined) {
+	      if (this.array.length === 0) {
+	        return -1;
+	      } else {
+	        return this.array[0].getAttribute(key);
+	      }
+	    } else {
+	      this.each( (el) => {
+	        el.setAttribute(key, value);
+	      });
+	    }
+	  }
+	
 	  data(key, value) {
 	    if (value === undefined) {
-	      return this[key];
+	      if (this.array.length === 0) {
+	        return -1;
+	      } else {
+	        return JSON.parse(this.array[0].getAttribute(key));
+	      }
 	    } else {
-	      this[key] = value;
+	      this.each( (el) => {
+	        el[key] = JSON.stringify(value);
+	      });
 	    }
 	  }
 	
@@ -321,8 +325,7 @@
 	  }
 	
 	  makeMove($square) {
-	    debugger
-	    const pos = $square.data("pos");
+	    const pos = $square.attr("pos");
 	    const currentPlayer = this.game.currentPlayer;
 	
 	    try {
@@ -360,12 +363,11 @@
 	    for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
 	      for (let colIdx = 0; colIdx < 3; colIdx++) {
 	        let $li = $l("<li>");
-	        $li.data("pos", [rowIdx, colIdx]);
-	
+	        $li.array[0]["pos"] = [rowIdx, colIdx];
 	        $ul.append($li);
 	      }
 	    }
-	
+	    debugger
 	    this.$el.append($ul);
 	  }
 	}
