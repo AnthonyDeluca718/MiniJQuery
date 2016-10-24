@@ -1,5 +1,3 @@
-$l = require('../lib/miniJquery.js');
-
 class View {
   constructor(game, $el) {
     this.game = game;
@@ -10,7 +8,6 @@ class View {
   }
 
   bindEvents() {
-    // install a handler on the `li` elements inside the board.
     this.$el.on("click", "li", ( event => {
       const $square = $l(event.currentTarget);
       this.makeMove($square);

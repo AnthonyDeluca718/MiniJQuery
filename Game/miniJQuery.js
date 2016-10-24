@@ -1,10 +1,11 @@
 const DOMNodeCollection = require('./dom_node_collection.js');
 
-$l = function(selector) {
+window.$l = function(selector) {
   let arr;
-  if ( selector instanceof HTMLElement){
+  if ( selector instanceof HTMLElement) {
     arr = [selector];
   } else if (typeof selector === "string" ) {
+    debugger
     arr = Array.from(document.querySelectorAll(selector));
   } else if ( typeof selector === "function" ) {
     document.addEventListener("DOMContentLoaded", selector);

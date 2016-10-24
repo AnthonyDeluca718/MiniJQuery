@@ -144,6 +144,14 @@ class DOMNodeCollection {
     });
   }
 
+  data(key, value) {
+    if (value === undefined) {
+      return this[key];
+    } else {
+      this[key] = value;
+    }
+  }
+
   get(ind) {
     let el = this.arr[ind];
     if (el) {

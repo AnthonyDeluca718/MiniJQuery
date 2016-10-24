@@ -44,107 +44,24 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	const View = __webpack_require__(1);
-	const Game = __webpack_require__(4);
-	__webpack_require__(2);
+	const DOMNodeCollection = __webpack_require__(1);
 	
-	$l( () => {
-	  const rootEl = $l('.ttt');
-	  const game = new Game();
-	  new View(game, rootEl);
-	});
-
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	$l = __webpack_require__(2);
-	
-	class View {
-	  constructor(game, $el) {
-	    this.game = game;
-	    this.$el = $el;
-	
-	    this.setupBoard();
-	    this.bindEvents();
-	  }
-	
-	  bindEvents() {
-	    // install a handler on the `li` elements inside the board.
-	    this.$el.on("click", "li", ( event => {
-	      const $square = $l(event.currentTarget);
-	      this.makeMove($square);
-	    }));
-	  }
-	
-	  makeMove($square) {
-	    const pos = $square.data("pos");
-	    const currentPlayer = this.game.currentPlayer;
-	
-	    try {
-	      this.game.playMove(pos);
-	    } catch (e) {
-	      alert("Invalid move! Try again.");
-	      return;
-	    }
-	
-	    $square.addClass(currentPlayer);
-	
-	    if (this.game.isOver()) {
-	      // cleanup click handlers.
-	      this.$el.off("click");
-	      this.$el.addClass("game-over");
-	
-	      const winner = this.game.winner();
-	      const $figcaption = $l("<figcaption>");
-	
-	      if (winner) {
-	        this.$el.addClass(`winner-${winner}`);
-	        $figcaption.html(`You win, ${winner}!`);
-	      } else {
-	        $figcaption.html("It's a draw!");
-	      }
-	
-	      this.$el.append($figcaption);
-	    }
-	  }
-	
-	  setupBoard() {
-	    const $ul = $l("<ul>");
-	    $ul.addClass("group");
-	
-	    for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
-	      for (let colIdx = 0; colIdx < 3; colIdx++) {
-	        let $li = $l("<li>");
-	        $li.data("pos", [rowIdx, colIdx]);
-	
-	        $ul.append($li);
-	      }
-	    }
-	
-	    this.$el.append($ul);
-	  }
-	}
-	
-	module.exports = View;
-
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	const DOMNodeCollection = __webpack_require__(3);
-	
-	$l = function(selector) {
+	window.$l = function(selector) {
 	  let arr;
-	  if ( selector instanceof HTMLElement){
-	    arr = [selector];
-	  } else if (typeof selector === "string" ) {
-	    arr = Array.from(document.querySelectorAll(selector));
-	  } else if ( typeof selector === "function" ) {
+	  let regHTML = /^<|>$>/ ;
+	
+	  if ( typeof selector === "function" ) {
 	    document.addEventListener("DOMContentLoaded", selector);
 	    return 1; //we don't want to return any collection
+	  } else if ( typeof selector === "string" && regHTML.test(selector) ) {
+	    var d = document.createElement('div');
+	    d.innerHTML = selector;
+	    arr = [d.firstChild];
+	    d = null;
+	  } else if (typeof selector === "string" ) {
+	    arr = Array.from(document.querySelectorAll(selector));
+	  } else {
+	    return -1;
 	  }
 	  return new DOMNodeCollection(arr);
 	};
@@ -195,11 +112,18 @@
 	  return result.substring(0, result.length - 1);
 	};
 	
-	module.exports = $l;
+	const View = __webpack_require__(2);
+	const Game = __webpack_require__(3);
+	
+	$l( () => {
+	  const rootEl = $l('.ttt');
+	  const game = new Game();
+	  new View(game, rootEl);
+	});
 
 
 /***/ },
-/* 3 */
+/* 1 */
 /***/ function(module, exports) {
 
 	class DOMNodeCollection {
@@ -348,6 +272,14 @@
 	    });
 	  }
 	
+	  data(key, value) {
+	    if (value === undefined) {
+	      return this[key];
+	    } else {
+	      this[key] = value;
+	    }
+	  }
+	
 	  get(ind) {
 	    let el = this.arr[ind];
 	    if (el) {
@@ -366,11 +298,83 @@
 
 
 /***/ },
-/* 4 */
+/* 2 */
+/***/ function(module, exports) {
+
+	class View {
+	  constructor(game, $el) {
+	    this.game = game;
+	    this.$el = $el;
+	
+	    this.setupBoard();
+	    this.bindEvents();
+	  }
+	
+	  bindEvents() {
+	    this.$el.on("click", "li", ( event => {
+	      const $square = $l(event.currentTarget);
+	      this.makeMove($square);
+	    }));
+	  }
+	
+	  makeMove($square) {
+	    const pos = $square.data("pos");
+	    const currentPlayer = this.game.currentPlayer;
+	
+	    try {
+	      this.game.playMove(pos);
+	    } catch (e) {
+	      alert("Invalid move! Try again.");
+	      return;
+	    }
+	
+	    $square.addClass(currentPlayer);
+	
+	    if (this.game.isOver()) {
+	      // cleanup click handlers.
+	      this.$el.off("click");
+	      this.$el.addClass("game-over");
+	
+	      const winner = this.game.winner();
+	      const $figcaption = $l("<figcaption>");
+	
+	      if (winner) {
+	        this.$el.addClass(`winner-${winner}`);
+	        $figcaption.html(`You win, ${winner}!`);
+	      } else {
+	        $figcaption.html("It's a draw!");
+	      }
+	
+	      this.$el.append($figcaption);
+	    }
+	  }
+	
+	  setupBoard() {
+	    const $ul = $l("<ul>");
+	    $ul.addClass("group");
+	
+	    for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
+	      for (let colIdx = 0; colIdx < 3; colIdx++) {
+	        let $li = $l("<li>");
+	        $li.data("pos", [rowIdx, colIdx]);
+	
+	        $ul.append($li);
+	      }
+	    }
+	
+	    this.$el.append($ul);
+	  }
+	}
+	
+	module.exports = View;
+
+
+/***/ },
+/* 3 */
 /***/ function(module, exports, __webpack_require__) {
 
-	const Board = __webpack_require__(5);
-	const MoveError = __webpack_require__(6);
+	const Board = __webpack_require__(4);
+	const MoveError = __webpack_require__(5);
 	
 	class Game {
 	  constructor() {
@@ -446,10 +450,10 @@
 
 
 /***/ },
-/* 5 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	const MoveError = __webpack_require__(6);
+	const MoveError = __webpack_require__(5);
 	
 	class Board {
 	  constructor() {
@@ -576,7 +580,7 @@
 
 
 /***/ },
-/* 6 */
+/* 5 */
 /***/ function(module, exports) {
 
 	
