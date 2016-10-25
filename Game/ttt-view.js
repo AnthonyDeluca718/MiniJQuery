@@ -49,12 +49,13 @@ class View {
   setupBoard() {
     const $ul = $l("<ul>");
     $ul.addClass("group");
+    $ul.addClass("ttt-board");
 
     for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
       for (let colIdx = 0; colIdx < 3; colIdx++) {
         let $li = $l("<li>");
-        $li.array[0].setAttribute("pos", JSON.stringify([rowIdx, colIdx]));
-        // $li.data("pos", [rowIdx, colIdx] );
+        $li.addClass("ttt-square");
+        $li.data("pos", [rowIdx, colIdx] );
         $ul.append($li);
       }
     }

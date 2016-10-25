@@ -27,9 +27,10 @@ h1 {
   margin: 30px;
 }
 
-ul {
+.ttt-board {
   margin: 30px auto;
   width: 300px;
+  border: 1px solid red;
 }
 
 li {
