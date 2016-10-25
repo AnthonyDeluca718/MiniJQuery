@@ -337,7 +337,8 @@
 	
 	    if (this.game.isOver()) {
 	      // cleanup click handlers.
-	      this.$el.off("click");
+	      $l(".ttt-square").off("click");
+	      debugger
 	      this.$el.addClass("game-over");
 	
 	      const winner = this.game.winner();
