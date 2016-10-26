@@ -67,12 +67,3 @@ const toQueryString = function(obj) {
   }
   return result.substring(0, result.length - 1);
 };
-
-const View = require('./ttt-view');
-const Game = require('./game');
-
-$l( () => {
-  const rootEl = $l('.ttt');
-  const game = new Game();
-  new View(game, rootEl);
-});

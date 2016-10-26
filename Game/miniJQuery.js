@@ -2,14 +2,22 @@ const DOMNodeCollection = require('./dom_node_collection.js');
 
 window.$l = function(selector) {
   let arr;
-  if ( selector instanceof HTMLElement) {
-    arr = [selector];
-  } else if (typeof selector === "string" ) {
-    debugger
-    arr = Array.from(document.querySelectorAll(selector));
-  } else if ( typeof selector === "function" ) {
+  let regHTML = /^<|>$>/ ;
+
+  if ( typeof selector === "function" ) {
     document.addEventListener("DOMContentLoaded", selector);
     return 1; //we don't want to return any collection
+  } else if ( typeof selector === "string" && regHTML.test(selector) ) {
+    var d = document.createElement('div');
+    d.innerHTML = selector;
+    arr = [d.firstChild];
+    d = null;
+  } else if( selector instanceof HTMLElement) {
+    arr = [selector];
+  }else if (typeof selector === "string" ) {
+    arr = Array.from(document.querySelectorAll(selector));
+  } else {
+    return -1;
   }
   return new DOMNodeCollection(arr);
 };
@@ -26,7 +34,7 @@ $l.ajax = function(obj = {}) {
     url: window.location.href,
     method: "GET",
     data: {},
-    contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+    contentType: 'application/json'
   };
 
   let mergedObj = $l.extend(def, obj);
@@ -39,11 +47,19 @@ $l.ajax = function(obj = {}) {
     xhr.url += "?" + toQueryString(xhr.data);
   }
 
+  //automatically add csrf tokens
+  const csrfToken = $l('meta[name=csrf-token]').attr('content');
+  if (csrfToken) {
+    xhr.setRequestHeader('X-CSRF-Token', csrfToken);
+  }
+
+  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
   xhr.onload = function (e) {
     if(xhr.status === 200) {
-      mergedObj.success(xhr.response);
-    } else {
-      mergedObj.error(xhr.response);
+      mergedObj.success(JSON.parse(xhr.response));
+    } else
+      mergedObj.error(JSON.parse(xhr.response));
     }
   };
 
@@ -59,5 +75,3 @@ const toQueryString = function(obj) {
   }
   return result.substring(0, result.length - 1);
 };
-
-module.exports = $l;

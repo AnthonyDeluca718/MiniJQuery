@@ -1,3 +1,5 @@
+require('../miniJquery/miniJquery.js');
+
 class View {
   constructor(game, $el) {
     this.game = game;
