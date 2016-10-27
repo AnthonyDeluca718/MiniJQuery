@@ -163,35 +163,63 @@
 	  return target;
 	};
 	
-	$l.ajax = function(obj = {}) {
-	  let def = {
-	    success: function() {return null},
-	    error: function() {return null},
-	    url: window.location.href,
+	function param(object) {
+	    var encodedString = '';
+	    for (var prop in object) {
+	        if (object.hasOwnProperty(prop)) {
+	            if (encodedString.length > 0) {
+	                encodedString += '&';
+	            }
+	            encodedString += encodeURI(prop + '=' + object[prop]);
+	        }
+	    }
+	    return encodedString;
+	}
+	
+	    // contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+	$l.ajax = (options) => {
+	  const request = new XMLHttpRequest();
+	  const defaults = {
 	    method: "GET",
+	    url: "",
+	    success: () => {},
+	    error: () => {},
 	    data: {},
-	    contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+	    processData: true,
+	    contentType: 'application/json'
 	  };
+	  options = $l.extend(defaults, options);
+	  options.method = options.method.toUpperCase();
 	
-	  let mergedObj = $l.extend(def, obj);
-	
-	  const xhr = new XMLHttpRequest();
-	
-	  xhr.open(mergedObj.method.toUpperCase(), mergedObj.url, true);
-	
-	  if (xhr.method === "GET"){
-	    xhr.url += "?" + toQueryString(xhr.data);
+	  if (options.method === "GET"){
+	    options.url += "?" + toQueryString(options.data);
 	  }
 	
-	  xhr.onload = function (e) {
-	    if(xhr.status === 200) {
-	      mergedObj.success(xhr.response);
+	  request.open(options.method, options.url, true);
+	
+	  //automatically add csrf tokens
+	  const csrfToken = $l('meta[name=csrf-token]').attr('content');
+	  if (csrfToken) {
+	    request.setRequestHeader('X-CSRF-Token', csrfToken);
+	  }
+	
+	  if (options.contentType) {
+	    request.setRequestHeader('Content-Type', options.contentType);
+	  }
+	
+	  request.onload = e => {
+	    if (request.status === 200) {
+	      options.success(JSON.parse(request.response));
 	    } else {
-	      mergedObj.error(xhr.response);
+	      options.error(JSON.parse(request.response));
 	    }
 	  };
 	
-	  xhr.send(JSON.stringify(mergedObj.data));
+	  if (options.processData) {
+	    request.send(JSON.stringify(options.data));
+	  } else {
+	    request.send(options.data);
+	  }
 	};
 	
 	const toQueryString = function(obj) {
@@ -405,48 +433,6 @@
 	    this.swapTurn();
 	  }
 	
-	  promptMove(reader, callback) {
-	    const game = this;
-	
-	    this.board.print();
-	    console.log(`Current Turn: ${this.currentPlayer}`)
-	
-	    reader.question('Enter rowIdx: ', rowIdxStr => {
-	      const rowIdx = parseInt(rowIdxStr);
-	      reader.question('Enter colIdx: ', colIdxStr => {
-	        const colIdx = parseInt(colIdxStr);
-	        callback([rowIdx, colIdx]);
-	      });
-	    });
-	  }
-	
-	  run(reader, gameCompletionCallback) {
-	    this.promptMove(reader, move => {
-	      try {
-	        this.playMove(move);
-	      } catch (e) {
-	        if (e instanceof MoveError) {
-	          console.log(e.msg);
-	        } else {
-	          throw e;
-	        }
-	      }
-	
-	      if (this.isOver()) {
-	        this.board.print();
-	        if (this.winner()) {
-	          console.log(`${this.winner()} has won!`);
-	        } else {
-	          console.log('NO ONE WINS!');
-	        }
-	        gameCompletionCallback();
-	      } else {
-	        // continue loop
-	        this.run(reader, gameCompletionCallback);
-	      }
-	    });
-	  }
-	
 	  swapTurn() {
 	    if (this.currentPlayer === Board.marks[0]) {
 	      this.currentPlayer = Board.marks[1];
@@ -504,21 +490,6 @@
 	    }
 	
 	    this.grid[pos[0]][pos[1]] = mark;
-	  }
-	
-	  print() {
-	    const strs = [];
-	    for (let rowIdx = 0; rowIdx < 3; rowIdx++) {
-	      const marks = [];
-	      for (let colIdx = 0; colIdx < 3; colIdx++) {
-	        marks.push(
-	          this.grid[rowIdx][colIdx] ? this.grid[rowIdx][colIdx] : " "
-	        );
-	      }
-	      strs.push(`${marks.join('|')}\n`);
-	    }
-	
-	    console.log(strs.join('-----\n'));
 	  }
 	
 	  winner() {
