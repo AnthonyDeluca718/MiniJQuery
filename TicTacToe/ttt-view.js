@@ -32,24 +32,23 @@ class View {
     if (this.game.isOver()) {
       // cleanup click handlers.
       $l(".ttt-square").off("click");
-      debugger
       this.$el.addClass("game-over");
 
       const winner = this.game.winner();
       const $figcaption = $l("<figcaption>");
       if (winner) {
         this.$el.addClass(`winner-${winner}`);
-        $l('figcaption').html(`You win, ${winner}!`);
+        $l('h1').html(`You win, ${winner}!`);
       } else {
-        $l('sfigcaption').html("It's a draw!");
+        $l('h1').html("It's a draw!");
       }
     }
   }
 
   setupBoard() {
 
-    const $figcaption = $l('<figcaption>');
-    this.$el.append($figcaption);
+    const $title = $l('<h1>Tic Tac Toe<h1>');
+    this.$el.append($title);
 
     const $ul = $l("<ul>");
     $ul.addClass("group");

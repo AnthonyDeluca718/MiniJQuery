@@ -81,6 +81,10 @@ li:hover {
   cursor: default;
 }
 
+.game-over li:hover {
+  background: white;
+}
+
 .winner-x .x,
 .winner-o .o {
   color: red;
