@@ -5,13 +5,13 @@
 
 ### Functionality
 
-All of the core functionality of chess is implemented:
+All of the core functionality of chess is implemented:*
 -Players are restricted to legal moves
 -The game automatically checks for Checkmate and Stalemate
 -Castling is implemented correctly (you cannot castle through check or if either the King or the Rook has previously moved. You also cannot castle when in check)
 -Alerts when a player is put into check
 
-Using $l.ajax:
+Using $l.ajax:*
 -Get Requests automatically add data key-value pairs to the url
 -The method assumes that any data or error messages returned from the server will be formatted as JSON
 -Two optional parameters input.contentType and input.processData control what you send to the server. By default the contentType is set to 'application/json' and processData is set to true.
