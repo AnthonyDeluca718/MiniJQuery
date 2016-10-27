@@ -1,7 +1,7 @@
 ## MiniJQuery
 
 [Live: Demonstration Tic Tac Toe]
-()
+(https://anthonydeluca718.github.io/MiniJQuery/)
 
 ### Functionality
 
@@ -17,7 +17,7 @@ Using $l.ajax:
 -Two optional parameters input.contentType and input.processData control what you send to the server. By default the contentType is set to 'application/json' and processData is set to true.
 -If processData is set to true then input.data will have JSON.parse called on it before being passed to the server.
 -The attribute 'Content-Type' will be set to the variable input.contentType
--If you want to send a **FormData** object to the server set contentType to null and processData to false. 
+-If you want to send a **FormData** object to the server set contentType to null and processData to false.
 
 
 ### Display
