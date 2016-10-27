@@ -37,19 +37,20 @@ class View {
 
       const winner = this.game.winner();
       const $figcaption = $l("<figcaption>");
-
       if (winner) {
         this.$el.addClass(`winner-${winner}`);
-        $figcaption.html(`You win, ${winner}!`);
+        $l('figcaption').html(`You win, ${winner}!`);
       } else {
-        $figcaption.html("It's a draw!");
+        $l('sfigcaption').html("It's a draw!");
       }
-
-      this.$el.append($figcaption);
     }
   }
 
   setupBoard() {
+
+    const $figcaption = $l('<figcaption>');
+    this.$el.append($figcaption);
+
     const $ul = $l("<ul>");
     $ul.addClass("group");
     $ul.addClass("ttt-board");

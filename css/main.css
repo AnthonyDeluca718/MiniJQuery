@@ -78,15 +78,12 @@ li:hover {
 }
 
 .game-over li {
-  color: red;
   cursor: default;
-  background: yellow;
 }
 
 .winner-x .x,
 .winner-o .o {
-  background: green;
-  color: white;
+  color: red;
 }
 
 figcaption {
