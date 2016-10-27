@@ -58,6 +58,7 @@ class View {
       for (let colIdx = 0; colIdx < 3; colIdx++) {
         let $li = $l("<li>");
         $li.addClass("ttt-square");
+        $li.addClass(`square${rowIdx}${colIdx}`);
         $li.data("pos", [rowIdx, colIdx] );
         $ul.append($li);
       }

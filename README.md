@@ -24,9 +24,9 @@ Details of $l.ajax:
 ![Gameplay] ()
 
 ### Main Technologies
-- 
--
--
+- miniJquery is written entire using ES6 Javascript and DOM manipulation
+- TicTacToe is written with miniJquery and ES6 Javascript
+- Webpack is used as a transpiler 
 
 ### Implementation Notes
 -

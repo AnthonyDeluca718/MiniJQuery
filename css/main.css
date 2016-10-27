@@ -25,21 +25,21 @@ body {
 h1 {
   font-size: 60px;
   margin: 30px;
+  /*color: #8FBC8F;*/
+  color: 	#DA70D6;
 }
 
 .ttt-board {
   margin: 30px auto;
-  width: 300px;
-  border: 1px solid red;
+  width: 470px;
 }
 
 li {
   float: left;
-  width: 90px;
-  height: 90px;
-  background: gray;
+  width: 150px;
+  height: 150px;
   cursor: pointer;
-  margin: 5px;
+  font-size: 100px;
 }
 
 li:hover {
@@ -50,6 +50,7 @@ li:hover {
 .o {
   background: white;
   cursor: default;
+  font-size: 60px;
 }
 
 .x:hover,
@@ -66,17 +67,19 @@ li:hover {
 }
 
 .x:after {
-  content: "x";
+  content: "X";
+  font size: 100px;
 }
 
 .o:after {
-  content: "o";
+  content: "O";
+  font-size: 100px;
 }
 
 .game-over li {
   color: red;
   cursor: default;
-  background: white;
+  background: yellow;
 }
 
 .winner-x .x,
@@ -87,4 +90,46 @@ li:hover {
 
 figcaption {
   font-size: 30px;
+}
+
+/*setting up the border*/
+
+.square00 {
+  border-right: 10px solid black;
+  border-bottom: 10px solid black;
+}
+
+.square01 {
+  border-bottom: 10px solid black;
+  border-right: 10px solid black;
+}
+
+.square02 {
+  border-bottom: 10px solid black;
+}
+
+.square10 {
+  border-right: 10px solid black;
+  border-bottom: 10px solid black;
+}
+
+.square11 {
+  border-bottom: 10px solid black;
+  border-right: 10px solid black;
+}
+
+.square12 {
+  border-bottom: 10px solid black;
+}
+
+.square20 {
+  border-right: 10px solid black;
+}
+
+.square21 {
+  border-right: 10px solid black;
+}
+
+.square22 {
+
 }
