@@ -21,14 +21,9 @@ Details of $l.ajax:
 
 ### TicTacToe
 
-![Gameplay] ()
+![Gameplay] (./TicTacToe/TicTacToe.png)
 
 ### Main Technologies
 - miniJquery is written entire using ES6 Javascript and DOM manipulation
 - TicTacToe is written with miniJquery and ES6 Javascript
-- Webpack is used as a transpiler 
-
-### Implementation Notes
--
--
--
+- Webpack is used to transpile the javacript files

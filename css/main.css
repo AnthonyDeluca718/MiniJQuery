@@ -90,10 +90,23 @@ li:hover {
   color: red;
 }
 
-figcaption {
-  font-size: 30px;
+.reset {
+  display: block;
+  padding: 10px;
+  margin: 30px auto;
+  background: red;
+  border-radius: 5px;
+  font-size: 24px;
+  width: 240px;
 }
 
+.description {
+  font-size: 20px;
+}
+
+a {
+  text-decoration: none;
+}
 /*setting up the border*/
 
 .square00 {

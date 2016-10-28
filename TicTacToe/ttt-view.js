@@ -2,6 +2,7 @@ require('../miniJquery/miniJquery.js');
 
 class View {
   constructor(game, $el) {
+    this.resetBoard = this.resetBoard.bind(this);
     this.game = game;
     this.$el = $el;
 
@@ -22,9 +23,8 @@ class View {
 
     try {
       this.game.playMove(pos);
-    } catch (e) {
-      alert("Invalid move! Try again.");
-      return;
+    } catch(e) {
+
     }
 
     $square.addClass(currentPlayer);
@@ -35,12 +35,13 @@ class View {
       this.$el.addClass("game-over");
 
       const winner = this.game.winner();
-      const $figcaption = $l("<figcaption>");
+
       if (winner) {
         this.$el.addClass(`winner-${winner}`);
-        $l('h1').html(`You win, ${winner}!`);
+        this.winner = winner;
+        $l('h1').html(`Game Over: ${winner.toUpperCase()} wins!`);
       } else {
-        $l('h1').html("It's a draw!");
+        $l('h1').html("Tie Game!");
       }
     }
   }
@@ -64,7 +65,30 @@ class View {
       }
     }
     this.$el.append($ul);
-  }
-}
 
+    const $reset = $l('<div>Reset Game<div>');
+    $reset.addClass('reset');
+    this.$el.append($reset);
+
+    $l('.reset').on('click', this.resetBoard);
+    const $description = $l('<div></div>');
+    $description.html('This page exists to demonstrate my MiniJQuery. Github <a href="https://github.com/AnthonyDeluca718/MiniJQuery">here</a>');
+    $description.addClass('description');
+    this.$el.append($description);
+  }
+
+  resetBoard() {
+    this.game.reset();
+    this.$el.children().each((node) => {node.remove()} );
+    this.$el.removeClass("game-over");
+
+    if (this.winner) {
+      this.$el.removeClass(`winner-${this.winner}`);
+    }
+
+    this.setupBoard();
+    this.bindEvents();
+  }
+
+}
 module.exports = View;
