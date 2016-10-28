@@ -21,7 +21,7 @@ Details of $l.ajax:
 
 ### TicTacToe
 
-![Gameplay] (./TicTacToe/TicTacToe.png)
+![Gameplay] (https://github.com/AnthonyDeluca718/MiniJQuery/blob/master/TicTacToe/TicTacToe.png)
 
 ### Main Technologies
 - miniJquery is written entire using ES6 Javascript and DOM manipulation
