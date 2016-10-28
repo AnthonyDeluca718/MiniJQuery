@@ -26,4 +26,4 @@ Details of $l.ajax:
 ### Main Technologies
 - miniJquery is written entire using ES6 Javascript and DOM manipulation
 - TicTacToe is written with miniJquery and ES6 Javascript
-- Webpack is used to transpile the javacript files
+- Babel is used via Webpack to transpile the javascript files
