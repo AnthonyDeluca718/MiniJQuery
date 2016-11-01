@@ -133,7 +133,7 @@
 	
 	    $l('.reset').on('click', this.resetBoard);
 	    const $description = $l('<div></div>');
-	    $description.html('This page exists to demonstrate my MiniJQuery. Github <a href="https://github.com/AnthonyDeluca718/MiniJQuery">here</a>');
+	    $description.html('<a href="https://github.com/AnthonyDeluca718/MiniJQuery">miniJQ Github</a>');
 	    $description.addClass('description');
 	    this.$el.append($description);
 	
@@ -145,12 +145,25 @@
 	    $sig.addClass('footer-signiture');
 	
 	    $footer.append($sig);
+	
+	
+	    const $git=$l('<a/>');
+	    const $linked=$l('<a/>');
+	    const $mail=$l('<a/>');
+	
+	    $git.attr('href', "https://github.com/AnthonyDeluca718");
+	    $linked.attr('href', "https://www.linkedin.com/in/a-deluca");
+	    $mail.attr('href',"mailto:mail@adeluca.io");
+	
+	    $git.html('<i class="devicon-github-plain colored"></i>');
+	    $linked.html('<i class="fa fa-linkedin" aria-hidden="true"></i>');
+	    $mail.html('<i class="fa fa-envelope" aria-hidden="true"></i>');
+	
+	    $footer.append($git);
+	    $footer.append($linked);
+	    $footer.append($mail);
+	
 	    this.$el.append($footer);
-	
-	          // <a href="https://github.com/AnthonyDeluca718"><i className="devicon-github-plain colored"></i></a>
-	          // <a href="https://www.linkedin.com/in/a-deluca"><i className="fa fa-linkedin" aria-hidden="true"></i></a>
-	          // <a href="mailto:mail@adeluca.io" ><i className="fa fa-envelope" aria-hidden="true"></i></a>
-	
 	  }
 	
 	  resetBoard() {
