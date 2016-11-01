@@ -148,3 +148,24 @@ a {
 .square22 {
 
 }
+
+/* Footer */
+
+
+.footer-content {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.footer-content i {
+  display: inline-block;
+  margin-right: 20px;
+  font-size: 32px;
+}
+
+.footer-signiture {
+  display: inline;
+  font-size: 36px;
+  margin-right: 40px;
+  font-family: 'Cookie', cursive;
+}

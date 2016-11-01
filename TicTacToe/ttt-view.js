@@ -48,7 +48,7 @@ class View {
 
   setupBoard() {
 
-    const $title = $l('<h1>Tic Tac Toe<h1>');
+    const $title = $l('<h1>miniJQuery Tic Tac Toe<h1>');
     this.$el.append($title);
 
     const $ul = $l("<ul>");
@@ -75,6 +75,21 @@ class View {
     $description.html('This page exists to demonstrate my MiniJQuery. Github <a href="https://github.com/AnthonyDeluca718/MiniJQuery">here</a>');
     $description.addClass('description');
     this.$el.append($description);
+
+    const $footer = $l('<footer/>');
+    $footer.addClass('footer-content');
+    $footer.addClass('group');
+
+    const $sig = $l('<div>Anthony Deluca</div>');
+    $sig.addClass('footer-signiture');
+
+    $footer.append($sig);
+    this.$el.append($footer);
+
+          // <a href="https://github.com/AnthonyDeluca718"><i className="devicon-github-plain colored"></i></a>
+          // <a href="https://www.linkedin.com/in/a-deluca"><i className="fa fa-linkedin" aria-hidden="true"></i></a>
+          // <a href="mailto:mail@adeluca.io" ><i className="fa fa-envelope" aria-hidden="true"></i></a>
+
   }
 
   resetBoard() {
